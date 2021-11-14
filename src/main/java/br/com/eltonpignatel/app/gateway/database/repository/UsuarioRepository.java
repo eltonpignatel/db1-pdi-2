@@ -1,4 +1,4 @@
-package br.com.eltonpignatel.gateway.database.repository;
+package br.com.eltonpignatel.app.gateway.database.repository;
 
 import java.util.List;
 
