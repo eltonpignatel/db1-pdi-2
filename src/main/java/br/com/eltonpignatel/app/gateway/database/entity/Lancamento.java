@@ -5,6 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +25,8 @@ public class Lancamento {
 	
 	@Id
 	Long id;
-	
+
+	@NotNull(message = "Descricao do lancamento nao pode ser nula")
 	String descricao;
 	
 	Double valor;
