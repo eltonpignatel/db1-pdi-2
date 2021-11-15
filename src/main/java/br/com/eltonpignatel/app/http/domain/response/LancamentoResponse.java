@@ -1,11 +1,6 @@
 package br.com.eltonpignatel.app.http.domain.response;
 
 import java.util.Calendar;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import br.com.eltonpignatel.app.gateway.database.entity.Lancamento;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,9 +15,14 @@ import lombok.ToString;
 @NoArgsConstructor
 
 public class LancamentoResponse {
-	
-	
-	
+
+	Long id;
+	String descricao;
+	Double valor;
+	Long usuario;
+	Calendar dataVencimeto;
+	Calendar dataCadastro;
+
 	public LancamentoResponse(Lancamento lancamento) {
 		super();
 		this.id = lancamento.getId();
@@ -32,12 +32,5 @@ public class LancamentoResponse {
 		this.dataVencimeto = lancamento.getDataVencimeto();
 		this.dataCadastro = lancamento.getDataCadastro();
 	}
-	
-	Long id;
-	String descricao;
-	Double valor;
-	Long usuario;
-	Calendar dataVencimeto;
-	Calendar dataCadastro;
 }
 

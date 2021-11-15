@@ -1,11 +1,13 @@
 package br.com.eltonpignatel.app.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.eltonpignatel.app.gateway.amqp.LancamentoPublisher;
+import br.com.eltonpignatel.app.gateway.amqp.entity.LancamentoAmqp;
 import br.com.eltonpignatel.app.gateway.database.entity.Lancamento;
 import br.com.eltonpignatel.app.gateway.database.repository.LancamentoRepository;
 import br.com.eltonpignatel.app.gateway.database.repository.ProcessaLancamentoRepository;
@@ -19,18 +21,27 @@ public class LancamentoServiceImpl implements LancamentosService{
 	
 	@Autowired
 	LancamentoRepository lancamentoRepository;
+
+	@Autowired
+	private RabbitTemplate rabbitTemplate;
+
+	@Autowired
+	private LancamentoPublisher lancamentoPublisher;
 	
 	@Override
 	public List<Lancamento> findAll() {
-		List<Lancamento> lancamentos = new ArrayList<Lancamento>();
-		lancamentos = lancamentoRepository.findAll();
-		return lancamentos;
+		return lancamentoRepository.findAll();
 	}
 
 	@Override
-	public String processaLancamentos(String descricao, Long Usuario, Long valor, Integer numeroParcelas) {
-		String retorno  = processaLancamentoRepository.processaLancamentos();
-		return retorno;
+	public String processaLancamentos(String descricao, Long usuario, Long valor, Integer numeroParcelas) {
+		return processaLancamentoRepository.processaLancamentos();
+	}
+
+	@Override
+	public String processaLancamentosAsync(LancamentoAmqp lancamentoAmqp) {
+		lancamentoPublisher.send(rabbitTemplate,lancamentoAmqp);
+		return "Incluído na fila";
 	}
 
 }
