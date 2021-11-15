@@ -17,10 +17,10 @@ import br.com.eltonpignatel.app.service.LancamentosService;
 public class LancamentoServiceImpl implements LancamentosService{
 	
 	@Autowired
-	ProcessaLancamentoRepository processaLancamentoRepository;
+	private ProcessaLancamentoRepository processaLancamentoRepository;
 	
 	@Autowired
-	LancamentoRepository lancamentoRepository;
+	private LancamentoRepository lancamentoRepository;
 
 	@Autowired
 	private RabbitTemplate rabbitTemplate;

@@ -28,7 +28,7 @@ public class LancamentoWSImpl implements LancamentoWS {
 	
 	@GetMapping("listTransactions")  
 	public List<LancamentoResponse> listaLancamentos() {
-		List<LancamentoResponse> lancamentosResponse = new ArrayList<LancamentoResponse>();
+		List<LancamentoResponse> lancamentosResponse = new ArrayList<>();
 		List<Lancamento> lancamentos = lancamentoService.findAll();
 		
 		lancamentos.stream().forEach( lancamento -> {
