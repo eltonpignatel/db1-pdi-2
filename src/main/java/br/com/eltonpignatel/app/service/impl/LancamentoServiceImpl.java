@@ -25,6 +25,7 @@ public class LancamentoServiceImpl implements LancamentosService{
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
 
+
 	@Autowired
 	private LancamentoPublisher lancamentoPublisher;
 	
