@@ -15,21 +15,20 @@ import oracle.jdbc.OracleTypes;
 
 @Repository
 public class ProcessaLancamentoRepositoryImpl implements ProcessaLancamentoRepository {
-	
+
+    private static final String SQL_LANCAMENTOS_PROCESSA_PARCELAS = "begin pck_lancamentos.processa_parcelas(p_descricao=> ?, p_usuario=> ?, p_valor_total=> ?, p_numero_parcelas=> ?, p_retorno => ?); end;";
+
 	@Autowired
     protected DataSource dataSource;
 	
 	@Override
 	public String processaLancamentos() {
 		// TODO Auto-generated method stub
-		
-		Connection connection = null;
-        CallableStatement st = null;
-        String retorno = "nao deu";
-        try {
 
-            connection = dataSource.getConnection();
-            st = connection.prepareCall("begin pck_lancamentos.processa_parcelas(p_descricao=> ?, p_usuario=> ?, p_valor_total=> ?, p_numero_parcelas=> ?, p_retorno => ?); end;");
+        String retorno = "nao deu";
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement st = connection.prepareCall(SQL_LANCAMENTOS_PROCESSA_PARCELAS);) {
+
             st.setString(1, "teste de lancamento");
             st.setLong(2, 1);
             st.setLong(3, 100);
@@ -42,15 +41,8 @@ public class ProcessaLancamentoRepositoryImpl implements ProcessaLancamentoRepos
         }catch(Exception e){
         	e.printStackTrace();
         	System.out.println(e.getMessage());
-        } finally {
-        	if (connection != null) {
-                try {
-                	connection.close();
-                } catch (SQLException s) {
-                	System.out.println("Error a long closing Connection to Pool Hikari");
-                }
-            }
         }
+
 		return retorno;
 	}
 	
