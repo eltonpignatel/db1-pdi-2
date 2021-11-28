@@ -28,7 +28,7 @@ public class LancamentoResponse {
 		this.id = lancamento.getId();
 		this.descricao = lancamento.getDescricao();
 		this.valor = lancamento.getValor();
-		this.usuario = lancamento.getUsuario();
+		this.usuario = lancamento.getUsuario().getId();
 		this.dataVencimeto = lancamento.getDataVencimeto();
 		this.dataCadastro = lancamento.getDataCadastro();
 	}

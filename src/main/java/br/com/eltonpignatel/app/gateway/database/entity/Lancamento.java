@@ -1,10 +1,7 @@
 package br.com.eltonpignatel.app.gateway.database.entity;
 
 import java.util.Calendar;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import lombok.EqualsAndHashCode;
@@ -30,8 +27,9 @@ public class Lancamento {
 	String descricao;
 	
 	Double valor;
-	
-	Long usuario;
+
+	@OneToOne
+	Usuario usuario;
 	
 	@Column(name="data_vencimento")
 	Calendar dataVencimeto;

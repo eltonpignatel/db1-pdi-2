@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.eltonpignatel.app.gateway.amqp.entity.LancamentoAmqp;
+import br.com.eltonpignatel.app.http.domain.request.LancamentoRequest;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,6 @@ import br.com.eltonpignatel.app.service.impl.LancamentoServiceImpl;
 @RequestMapping("/transactions")
 public class LancamentoWSImpl implements LancamentoWS {
 
-
 	@Autowired
 	LancamentoServiceImpl lancamentoService;
 	
@@ -39,8 +39,8 @@ public class LancamentoWSImpl implements LancamentoWS {
 	}
 
 	@PostMapping("processTransactions")
-	public ProcessaParcelasResponse processaParcelas(@RequestBody String descricao, Long usuario, Long valor, Integer numeroParcelas) {
-		String retorno = lancamentoService.processaLancamentos(descricao, usuario, valor, numeroParcelas);
+	public ProcessaParcelasResponse processaParcelas( @RequestBody LancamentoRequest lancamento) {
+		String retorno = lancamentoService.processaLancamentos(lancamento.getDescricao(), lancamento.getUsuario(), lancamento.getValor(), lancamento.getNroParcelas(), lancamento.getDataVencimento());
 		ProcessaParcelasResponse processaParcelasResponse = new ProcessaParcelasResponse();
 		processaParcelasResponse.setMensagem(retorno);
 		return processaParcelasResponse;

@@ -1,5 +1,6 @@
 package br.com.eltonpignatel.app.service.impl;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -35,8 +36,8 @@ public class LancamentoServiceImpl implements LancamentosService{
 	}
 
 	@Override
-	public String processaLancamentos(String descricao, Long usuario, Long valor, Integer numeroParcelas) {
-		return processaLancamentoRepository.processaLancamentos();
+	public String processaLancamentos(String descricao, Long usuario, Double valor, Integer numeroParcelas, Calendar vencimento) {
+		return processaLancamentoRepository.processaLancamentos(descricao, usuario, valor, numeroParcelas,  vencimento);
 	}
 
 	@Override
