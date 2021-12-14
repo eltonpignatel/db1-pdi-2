@@ -39,7 +39,7 @@ public class ProcessaLancamentoRepositoryImpl implements ProcessaLancamentoRepos
 
         }catch(Exception e) {
         	e.printStackTrace();
-        	log.debug("Erro ao fazer chamada no banco de dados",e);
+        	log.debug("Erro ao fazer chamada no banco de dados.",e);
             retorno = "Nao foi possivel executar transacao com banco de dados";
         }
 
