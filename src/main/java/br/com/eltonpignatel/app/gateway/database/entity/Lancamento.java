@@ -3,8 +3,6 @@ package br.com.eltonpignatel.app.gateway.database.entity;
 import java.util.Calendar;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +11,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 @NoArgsConstructor
 
 @Entity
@@ -29,6 +26,7 @@ public class Lancamento {
 	Double valor;
 
 	@OneToOne
+	@JoinColumn(name = "usuario", referencedColumnName = "id")
 	Usuario usuario;
 	
 	@Column(name="data_vencimento")

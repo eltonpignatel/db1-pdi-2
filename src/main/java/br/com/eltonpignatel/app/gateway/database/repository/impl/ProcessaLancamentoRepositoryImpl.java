@@ -18,15 +18,15 @@ import oracle.jdbc.OracleTypes;
 public class ProcessaLancamentoRepositoryImpl implements ProcessaLancamentoRepository {
 
     private static final String SQL_LANCAMENTOS_PROCESSA_PARCELAS = "begin pck_lancamentos.processa_parcelas(p_descricao=> ?, p_usuario=> ?, p_valor_total=> ?, p_numero_parcelas=> ?, p_vencimento=> ?, p_retorno => ?); end;";
+    private static final String SQL_LANCAMENTOS_PROCESSA_PARCELAS_SEM_VENCTO = "begin pck_lancamentos.processa_parcelas(p_descricao=> ?, p_usuario=> ?, p_valor_total=> ?, p_numero_parcelas=> ?, p_retorno => ?); end;";
 
 	@Autowired
     protected DataSource dataSource;
 	
 	@Override
 	public String processaLancamentos(String descricao, Long usuario, Double valor, Integer numeroParcelas, Calendar vencimento) {
-		// TODO Auto-generated method stub
 
-        String retorno = "Nao foi possivel executar transacao com banco de dados";
+        String retorno = null;
         try (Connection connection = dataSource.getConnection();
              CallableStatement st = connection.prepareCall(SQL_LANCAMENTOS_PROCESSA_PARCELAS);) {
 
@@ -34,7 +34,6 @@ public class ProcessaLancamentoRepositoryImpl implements ProcessaLancamentoRepos
             st.setLong(2, usuario);
             st.setDouble(3, valor);
             st.setLong(4, numeroParcelas);
-            System.out.println(vencimento.toString());
             st.setDate(5,new java.sql.Date( vencimento.getTimeInMillis()) );
             st.registerOutParameter(6 , OracleTypes.VARCHAR);
             st.executeUpdate();
@@ -43,10 +42,34 @@ public class ProcessaLancamentoRepositoryImpl implements ProcessaLancamentoRepos
 
         }catch(Exception e){
         	e.printStackTrace();
-        	System.out.println(e.getMessage());
+            retorno = "Nao foi possivel executar transacao com banco de dados";
         }
 
 		return retorno;
 	}
-	
+
+    @Override
+    public String processaLancamentos(String descricao, Long usuario, Double valor, Integer numeroParcelas) {
+
+        String retorno = null;
+        try (Connection connection = dataSource.getConnection();
+             CallableStatement st = connection.prepareCall(SQL_LANCAMENTOS_PROCESSA_PARCELAS_SEM_VENCTO);) {
+
+            st.setString(1, descricao);
+            st.setLong(2, usuario);
+            st.setDouble(3, valor);
+            st.setLong(4, numeroParcelas);
+            st.registerOutParameter(5 , OracleTypes.VARCHAR);
+            st.executeUpdate();
+
+            retorno = st.getString(5);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            retorno = "Nao foi possivel executar transacao com banco de dados";
+        }
+
+        return retorno;
+    }
+
 }

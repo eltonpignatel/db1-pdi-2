@@ -1,25 +1,18 @@
 package br.com.eltonpignatel.app.gateway.database.entity;
 
 import java.util.Calendar;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 @NoArgsConstructor
-
+@AllArgsConstructor
 @Entity
 @Table(name="usuario")
 public class Usuario {
@@ -30,4 +23,5 @@ public class Usuario {
 	
 	@Column(name="data_cadastro")
 	Calendar dataCadastro;
+
 }
