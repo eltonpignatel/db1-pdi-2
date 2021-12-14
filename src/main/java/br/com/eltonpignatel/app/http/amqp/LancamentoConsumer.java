@@ -18,13 +18,14 @@ public class LancamentoConsumer {
     LancamentoServiceImpl lancamentoService;
 
     @RabbitListener(queues = RabbitConfig.QUEUE)
-    public void consumeMessageFromQueue(LancamentoAmqp lancamentoAmqp) {
+    public void consumeMessageFromQueue(LancamentoAmqp lancamentoAmqp) throws InterruptedException {
         log.info("Mensagem recebida da fila: {}",lancamentoAmqp);
 
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.debug(e.getMessage());
+            throw new InterruptedException();
         }
 
         String resultado = lancamentoService.processaLancamentos(lancamentoAmqp.getDescricao(), lancamentoAmqp.getUsuario(), lancamentoAmqp.getValor(), lancamentoAmqp.getNumeroParcelas(), Calendar.getInstance());

@@ -6,8 +6,6 @@ import java.util.List;
 import br.com.eltonpignatel.app.gateway.amqp.entity.LancamentoAmqp;
 import br.com.eltonpignatel.app.gateway.database.entity.Lancamento;
 import br.com.eltonpignatel.app.gateway.database.entity.Usuario;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 public interface LancamentosService {
 
