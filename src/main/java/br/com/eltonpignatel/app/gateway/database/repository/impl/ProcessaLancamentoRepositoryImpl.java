@@ -38,7 +38,6 @@ public class ProcessaLancamentoRepositoryImpl implements ProcessaLancamentoRepos
             retorno = st.getString(6);
 
         }catch(Exception e) {
-        	e.printStackTrace();
         	log.debug("Erro ao fazer chamada no banco de dados.",e);
             retorno = "Nao foi possivel executar transacao com banco de dados";
         }
@@ -63,7 +62,7 @@ public class ProcessaLancamentoRepositoryImpl implements ProcessaLancamentoRepos
             retorno = st.getString(5);
 
         }catch(Exception e){
-            e.printStackTrace();
+            log.debug("Erro ao fazer chamada no banco de dados.",e);
             retorno = "Nao foi possivel executar transacao com banco de dados";
         }
 

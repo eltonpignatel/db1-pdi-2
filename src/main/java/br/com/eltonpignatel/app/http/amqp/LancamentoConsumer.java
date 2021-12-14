@@ -24,8 +24,8 @@ public class LancamentoConsumer {
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             log.debug(e.getMessage());
-            throw new InterruptedException();
         }
 
         String resultado = lancamentoService.processaLancamentos(lancamentoAmqp.getDescricao(), lancamentoAmqp.getUsuario(), lancamentoAmqp.getValor(), lancamentoAmqp.getNumeroParcelas(), Calendar.getInstance());
